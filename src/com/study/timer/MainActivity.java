@@ -1,3 +1,6 @@
+//앱 실행 및 WebView와 Java 연결
+
+
 package com.study.timer;
 
 import android.app.Activity;
@@ -11,6 +14,7 @@ import android.graphics.Color;
 import android.widget.FrameLayout;
 
 public class MainActivity extends Activity {
+    //WebView class 객체 생성
     private WebView web;
     private final android.content.SharedPreferences.OnSharedPreferenceChangeListener stateListener = (prefs,key) -> {
         if("state".equals(key))runOnUiThread(this::refreshWeb);
@@ -31,6 +35,8 @@ public class MainActivity extends Activity {
         super.onRequestPermissionsResult(code,permissions,results);
         if(code==41)TimerNotification.refresh(this);
     }
+
+
     public class Storage {
         @JavascriptInterface public String read() {
             return TimerStore.read(MainActivity.this);
@@ -42,19 +48,28 @@ public class MainActivity extends Activity {
             return TimerStore.act(MainActivity.this,action,revision,session);
         }
     }
+
+
     @Override public void onCreate(Bundle saved) {
         super.onCreate(saved);
         getWindow().setStatusBarColor(Color.rgb(250,249,246));
         getWindow().setNavigationBarColor(Color.rgb(250,249,246));
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+
+        //web 생성
         web = new WebView(this);
         web.setOverScrollMode(View.OVER_SCROLL_NEVER);
         web.setVerticalScrollBarEnabled(false);
         web.setHorizontalScrollBarEnabled(false);
         web.setBackgroundColor(Color.rgb(250,249,246));
+
+        //JavaScript 실행 허용
         web.getSettings().setJavaScriptEnabled(true);
+
         web.getSettings().setAllowFileAccess(false);
         web.getSettings().setAllowContentAccess(false);
+
+        //JavaScript와 Java가 연결되는 부분
         web.addJavascriptInterface(new Storage(), "DeviceStore");
         web.setWebViewClient(new WebViewClient(){
             @Override public boolean shouldOverrideUrlLoading(WebView view, String url) { return true; }
@@ -77,6 +92,8 @@ public class MainActivity extends Activity {
         }
         setContentView(safeArea);
         safeArea.requestApplyInsets();
+
+        //assets/index.html 을 WebView에 불러옴
         web.loadUrl("file:///android_asset/index.html");
         if(android.os.Build.VERSION.SDK_INT>=33 && checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)!=android.content.pm.PackageManager.PERMISSION_GRANTED
             && !getSharedPreferences("timer",MODE_PRIVATE).getBoolean("notificationAsked",false)) {

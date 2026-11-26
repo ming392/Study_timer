@@ -1,3 +1,6 @@
+//측정 시작, 중지의 상태 전환 규칙
+
+
 package com.study.timer;
 
 import org.json.JSONArray;

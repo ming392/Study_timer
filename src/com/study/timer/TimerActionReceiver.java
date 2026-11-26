@@ -1,3 +1,6 @@
+//시스템 알림창 이벤트 수신
+
+
 package com.study.timer;
 
 import android.content.BroadcastReceiver;

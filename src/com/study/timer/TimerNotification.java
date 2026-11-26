@@ -1,3 +1,6 @@
+//시스템 알림창 생성 및 갱신
+
+
 package com.study.timer;
 
 import android.Manifest;
