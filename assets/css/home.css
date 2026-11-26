@@ -1,0 +1,32 @@
+/* Home timer screen */
+.home {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0,1fr) 44px auto 24px minmax(0,1fr) auto 24px;
+    row-gap: 12px;
+    align-items: center;
+    justify-items: center;
+    padding-bottom: 12px;
+}
+.home > .segment, .running-label { grid-area: 2 / 1; transition: opacity .18s ease, transform .32s cubic-bezier(.22,1,.36,1); }
+.home > .segment { width: 180px; }
+.home.running > .segment { opacity: 0; transform: translateY(-8px); pointer-events: none; }
+.running-label { display: flex; align-items: center; gap: 8px; color: var(--green-dark); font-size: 14px; font-weight: 700; opacity: 0; transform: translateY(8px); pointer-events: none; }
+.home.running .running-label { opacity: 1; transform: translateY(0); transition-delay: .1s; }
+.running-dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; }
+.home.running .running-dot { animation: pulse 2s ease-in-out infinite; }
+.home[data-mode="rest"] .running-label { color: var(--rest-dark); }
+.home[data-mode="rest"] .running-dot { background: var(--rest); }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+.clock { grid-row: 3; margin-top: 20px; font-size: clamp(38px,15vw,76px); font-weight: 650; letter-spacing: -2.5px; line-height: 1.2; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.started { grid-row: 4; font-size: 13px; line-height: 24px; color: var(--muted); text-align: center; }
+.home > .primary { grid-row: 6; max-width: 340px; }
+.home.running > .primary { background: transparent; color: var(--green-dark); border-color: var(--green-dark); }
+.home[data-mode="rest"] > .primary { background: var(--peach); color: var(--rest-dark); }
+.home.running[data-mode="rest"] > .primary { background: transparent; color: var(--rest-dark); border-color: var(--rest-dark); }
+.home > .hint { grid-row: 7; margin: 0; opacity: 0; transform: translateY(5px); transition: opacity .2s,transform .2s; }
+.home.running > .hint { opacity: 1; transform: translateY(0); }
+@media (max-height: 650px) { .home { row-gap: 8px; padding-bottom: 0; } .clock { margin-top: 8px; } }
+@media (prefers-reduced-motion: reduce) { .home > .segment,.running-label,.home > .hint { transition: none; } .home.running .running-dot { animation: none; } }

@@ -1,0 +1,18 @@
+/* Log editor screen */
+.edit { overflow-y: auto; overscroll-behavior: none; scrollbar-width: none; }
+.edit > * { flex-shrink: 0; }
+.edit > .segment { margin-bottom: 24px; }
+.duration { margin: 0 0 24px; font-size: clamp(30px,10vw,48px); font-weight: 750; letter-spacing: -1.5px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.field { display: flex; align-items: center; gap: 12px; min-height: 54px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.field label { min-width: 32px; font-size: 14px; font-weight: 500; }
+.field input { flex: 1; min-width: 0; padding: 6px 0; border: 0; background: transparent; color: var(--muted); font-size: 13px; text-align: right; }
+.memo { display: block; margin-top: 16px; }
+.memo label { display: block; margin-bottom: 10px; color: var(--muted); font-size: 13px; }
+.memo textarea { width: 100%; min-height: 90px; padding: 4px 0; border: 0; background: transparent; resize: none; color: var(--ink); font-size: 14px; line-height: 1.7; }
+.memo textarea::placeholder { color: var(--muted); }
+.edit .primary { margin-top: 26px; }
+.delete-log { display: block; width: 100%; min-height: 48px; margin-top: 8px; color: var(--danger); font-size: 14px; border-radius: var(--radius); }
+.error { padding: 12px 0; color: var(--danger); font-size: 13px; line-height: 1.6; white-space: pre-line; }
+.error:empty { display: none; }
+.invalid { border-bottom-color: var(--danger); }
+@media (max-height:650px) { .edit > .segment,.duration { margin-bottom: 16px; } .edit .primary { margin-top: 16px; } }
